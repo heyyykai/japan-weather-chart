@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Best Time to Visit Japan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* === YOUR ORIGINAL CSS (unchanged) === */
+.japan-weather-chart {
+  font-family: 'Poppins', sans-serif;
+  max-width: 1100px;
+  margin: 3rem auto;
+  text-align: center;
+  padding: 0 16px;
+}
+.japan-weather-chart h2 {
+  font-size: 38px;
+  margin-bottom: 1rem;
+}
+.japan-weather-chart .legend {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 2rem;
+  font-size: 14px;
+  flex-wrap: wrap;
+}
+.japan-weather-chart .legend span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.japan-weather-chart .legend .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.legend .best { background-color: #5a7f53; }
+.legend .good { background-color: #9fbf89; }
+.legend .mixed { background-color: #f0bb68; }
+.legend .poor { background-color: #e27769; }
+
+.months-wrapper { overflow-x: auto; }
+.months {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 10px;
+}
+.month {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 70px;
+}
+.bar {
+  width: 26px;
+  height: 80px;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 6px;
+}
+.bar-fill {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px 10px 0 0;
+}
+.bar-fill.best { background:#5a7f53; }
+.bar-fill.good { background:#9fbf89; }
+.bar-fill.mixed { background:#f0bb68; }
+.bar-fill.poor { background:#e27769; }
+
+.emoji { font-size: 18px; }
+.temp { font-size: 16px; }
+.toggle-wrap {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+input[type="radio"] { display:none; }
+
+input#c:checked ~ .months-wrapper .f,
+input#f:checked ~ .months-wrapper .c {
+  display:none;
+}
+input#c:checked ~ .toggle-wrap label[for="c"],
+input#f:checked ~ .toggle-wrap label[for="f"] {
+  background:#1e73be;
+  color:#fff;
+}
+label {
+  padding:6px 12px;
+  border-radius:20px;
+  border:1px solid #ccc;
+  cursor:pointer;
+}
+.disclaimer {
+  font-size: 13px;
+  color: #555;
+  margin-top: 1.5rem;
+}
+</style>
+</head>
+
+<body>
+
+<div class="japan-weather-chart">
+  <h2>🌤️ Best Time to Visit Japan</h2>
+
+  <div class="legend">
+    <span><span class="dot best"></span>Best</span>
+    <span><span class="dot good"></span>Good</span>
+    <span><span class="dot mixed"></span>Mixed</span>
+    <span><span class="dot poor"></span>Poor</span>
+  </div>
+
+  <input type="radio" name="unit" id="c" checked>
+  <input type="radio" name="unit" id="f">
+
+  <div class="toggle-wrap">
+    <label for="c">°C</label>
+    <label for="f">°F</label>
+  </div>
+
+  <div class="months-wrapper">
+    <div class="months">
+      <div class="month"><div class="emoji">❄️</div><div class="bar"><span class="bar-fill poor"></span></div><div class="temp"><span class="c">4°C</span><span class="f">39°F</span></div><div>Jan</div></div>
+      <div class="month"><div class="emoji">🌦️</div><div class="bar"><span class="bar-fill mixed"></span></div><div class="temp"><span class="c">6°C</span><span class="f">43°F</span></div><div>Feb</div></div>
+      <div class="month"><div class="emoji">🌸</div><div class="bar"><span class="bar-fill good"></span></div><div class="temp"><span class="c">10°C</span><span class="f">50°F</span></div><div>Mar</div></div>
+      <div class="month"><div class="emoji">🌼</div><div class="bar"><span class="bar-fill best"></span></div><div class="temp"><span class="c">16°C</span><span class="f">61°F</span></div><div>Apr</div></div>
+      <div class="month"><div class="emoji">☀️</div><div class="bar"><span class="bar-fill best"></span></div><div class="temp"><span class="c">21°C</span><span class="f">70°F</span></div><div>May</div></div>
+      <div class="month"><div class="emoji">🌧️</div><div class="bar"><span class="bar-fill mixed"></span></div><div class="temp"><span class="c">24°C</span><span class="f">75°F</span></div><div>Jun</div></div>
+      <div class="month"><div class="emoji">🔥</div><div class="bar"><span class="bar-fill good"></span></div><div class="temp"><span class="c">29°C</span><span class="f">84°F</span></div><div>Jul</div></div>
+      <div class="month"><div class="emoji">🔥</div><div class="bar"><span class="bar-fill mixed"></span></div><div class="temp"><span class="c">31°C</span><span class="f">88°F</span></div><div>Aug</div></div>
+      <div class="month"><div class="emoji">🍁</div><div class="bar"><span class="bar-fill best"></span></div><div class="temp"><span class="c">25°C</span><span class="f">77°F</span></div><div>Sep</div></div>
+      <div class="month"><div class="emoji">🍂</div><div class="bar"><span class="bar-fill best"></span></div><div class="temp"><span class="c">18°C</span><span class="f">64°F</span></div><div>Oct</div></div>
+      <div class="month"><div class="emoji">🌥️</div><div class="bar"><span class="bar-fill mixed"></span></div><div class="temp"><span class="c">12°C</span><span class="f">54°F</span></div><div>Nov</div></div>
+      <div class="month"><div class="emoji">🎄</div><div class="bar"><span class="bar-fill poor"></span></div><div class="temp"><span class="c">6°C</span><span class="f">43°F</span></div><div>Dec</div></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    ⚠️ Data based on historical monthly averages (Tokyo). Not live.
+  </div>
+</div>
+
+</body>
+</html>
