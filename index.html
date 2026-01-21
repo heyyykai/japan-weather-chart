@@ -2,42 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Best Time to Visit</title>
+  <title>Best Time to Visit Japan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Font -->
+  <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background: #ffffff;
+    * {
+      box-sizing: border-box;
     }
 
-    .weather-chart {
+    .japan-weather-chart {
       font-family: 'Poppins', sans-serif;
-      max-width: 100%;
-      padding: 16px;
+      max-width: 1100px;
+      margin: 3rem auto;
       text-align: center;
+      padding: 0 16px;
     }
 
-    h2 {
-      font-size: 28px;
-      margin-bottom: 12px;
+    .japan-weather-chart h2 {
+      font-size: 38px;
+      margin-bottom: 1rem;
     }
 
     .legend {
       display: flex;
       justify-content: center;
-      gap: 12px;
-      font-size: 13px;
+      gap: 16px;
+      margin-bottom: 2rem;
+      font-size: 14px;
       flex-wrap: wrap;
-      margin-bottom: 18px;
     }
 
     .legend span {
@@ -47,65 +44,76 @@
     }
 
     .dot {
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
+      display: inline-block;
     }
 
-    .best  { background:#5a7f53; }
-    .good  { background:#9fbf89; }
-    .mixed { background:#f0bb68; }
-    .poor  { background:#e27769; }
+    .best  { background-color: #5a7f53; }
+    .good  { background-color: #9fbf89; }
+    .mixed { background-color: #f0bb68; }
+    .poor  { background-color: #e27769; }
 
-    .toggle {
-      margin-bottom: 16px;
+    .toggle-wrap {
+      margin: 2rem 0;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
     }
 
-    input { display:none; }
+    input[type="radio"] {
+      display: none;
+    }
 
     label {
+      cursor: pointer;
       padding: 6px 14px;
       border-radius: 20px;
       border: 1px solid #ccc;
-      cursor: pointer;
-      font-size: 14px;
-      margin: 0 4px;
+      font-size: 15px;
     }
 
-    input#c:checked ~ .toggle label[for="c"],
-    input#f:checked ~ .toggle label[for="f"] {
-      background:#1e73be;
-      color:#fff;
-      border-color:#1e73be;
+    input#c:checked ~ .toggle-wrap label[for="c"],
+    input#f:checked ~ .toggle-wrap label[for="f"] {
+      background-color: #1e73be;
+      color: white;
+      border-color: #1e73be;
     }
 
     .months-wrapper {
       overflow-x: auto;
-      padding-bottom: 6px;
     }
 
     .months {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
       gap: 14px;
-      width: max-content;
-      margin: auto;
+      font-size: 16px;
+    }
+
+    @media (max-width: 1024px) {
+      .months {
+        display: flex;
+        width: max-content;
+      }
     }
 
     .month {
-      min-width: 62px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: 14px;
+      min-width: 72px;
     }
 
     .emoji {
+      font-size: 18px;
       margin-bottom: 4px;
     }
 
     .bar {
-      height: 90px;
-      width: 24px;
+      width: 26px;
+      height: 80px;
       display: flex;
       align-items: flex-end;
       margin-bottom: 6px;
@@ -113,36 +121,41 @@
 
     .bar-fill {
       width: 100%;
-      height: 0;
-      border-radius: 8px 8px 0 0;
-      animation: grow 1.1s ease forwards;
-    }
-
-    @keyframes grow {
-      from { height: 0; }
-      to { height: var(--height); }
+      height: 100%;
+      display: block;
+      border-radius: 10px 10px 0 0;
     }
 
     .temp {
-      font-size: 13px;
+      font-size: 15px;
+      margin-bottom: 4px;
     }
 
-    input#c:checked ~ .months-wrapper .f { display:none; }
-    input#f:checked ~ .months-wrapper .c { display:none; }
+    .month-name {
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    input#c:checked ~ .months-wrapper .f {
+      display: none;
+    }
+
+    input#f:checked ~ .months-wrapper .c {
+      display: none;
+    }
 
     .disclaimer {
-      font-size: 12px;
+      font-size: 13px;
       color: #555;
-      margin-top: 12px;
+      margin-top: 1.5rem;
     }
   </style>
 </head>
 
 <body>
 
-<div class="weather-chart">
+<div class="japan-weather-chart">
 
-  <!-- 🔴 CHANGE ONLY THIS TITLE FOR OTHER COUNTRIES -->
   <h2>🌤️ Best Time to Visit Japan</h2>
 
   <div class="legend">
@@ -152,10 +165,10 @@
     <span><span class="dot poor"></span>Poor</span>
   </div>
 
-  <input type="radio" id="c" name="unit" checked>
-  <input type="radio" id="f" name="unit">
+  <input type="radio" name="unit" id="c" checked>
+  <input type="radio" name="unit" id="f">
 
-  <div class="toggle">
+  <div class="toggle-wrap">
     <label for="c">°C</label>
     <label for="f">°F</label>
   </div>
@@ -163,120 +176,95 @@
   <div class="months-wrapper">
     <div class="months">
 
-      <!-- 🟢 COPY THIS MONTH BLOCK FOR OTHER COUNTRIES -->
       <div class="month">
         <div class="emoji">❄️</div>
-        <div class="bar">
-          <span class="bar-fill poor" style="--height: 30%;"></span>
-        </div>
+        <div class="bar"><span class="bar-fill poor"></span></div>
         <div class="temp"><span class="c">4°C</span><span class="f">39°F</span></div>
-        <div>Jan</div>
+        <div class="month-name">Jan</div>
       </div>
 
       <div class="month">
         <div class="emoji">🌦️</div>
-        <div class="bar">
-          <span class="bar-fill mixed" style="--height: 45%;"></span>
-        </div>
+        <div class="bar"><span class="bar-fill mixed"></span></div>
         <div class="temp"><span class="c">6°C</span><span class="f">43°F</span></div>
-        <div>Feb</div>
+        <div class="month-name">Feb</div>
       </div>
 
       <div class="month">
         <div class="emoji">🌸</div>
-        <div class="bar">
-          <span class="bar-fill good" style="--height: 65%;"></span>
-        </div>
+        <div class="bar"><span class="bar-fill good"></span></div>
         <div class="temp"><span class="c">10°C</span><span class="f">50°F</span></div>
-        <div>Mar</div>
+        <div class="month-name">Mar</div>
       </div>
 
       <div class="month">
         <div class="emoji">🌼</div>
-        <div class="bar">
-          <span class="bar-fill best" style="--height: 85%;"></span>
-        </div>
+        <div class="bar"><span class="bar-fill best"></span></div>
         <div class="temp"><span class="c">16°C</span><span class="f">61°F</span></div>
-        <div>Apr</div>
+        <div class="month-name">Apr</div>
       </div>
 
       <div class="month">
         <div class="emoji">☀️</div>
-        <div class="bar">
-          <span class="bar-fill best" style="--height: 90%;"></span>
-        </div>
+        <div class="bar"><span class="bar-fill best"></span></div>
         <div class="temp"><span class="c">21°C</span><span class="f">70°F</span></div>
-        <div>May</div>
+        <div class="month-name">May</div>
       </div>
 
       <div class="month">
         <div class="emoji">🌧️</div>
-        <div class="bar">
-          <span class="bar-fill mixed" style="--height: 55%;"></span>
-        </div>
+        <div class="bar"><span class="bar-fill mixed"></span></div>
         <div class="temp"><span class="c">24°C</span><span class="f">75°F</span></div>
-        <div>Jun</div>
+        <div class="month-name">Jun</div>
       </div>
 
       <div class="month">
         <div class="emoji">🔥</div>
-        <div class="bar">
-          <span class="bar-fill good" style="--height: 75%;"></span>
-        </div>
+        <div class="bar"><span class="bar-fill good"></span></div>
         <div class="temp"><span class="c">29°C</span><span class="f">84°F</span></div>
-        <div>Jul</div>
+        <div class="month-name">Jul</div>
       </div>
 
       <div class="month">
         <div class="emoji">🔥</div>
-        <div class="bar">
-          <span class="bar-fill mixed" style="--height: 60%;"></span>
-        </div>
+        <div class="bar"><span class="bar-fill mixed"></span></div>
         <div class="temp"><span class="c">31°C</span><span class="f">88°F</span></div>
-        <div>Aug</div>
+        <div class="month-name">Aug</div>
       </div>
 
       <div class="month">
         <div class="emoji">🍁</div>
-        <div class="bar">
-          <span class="bar-fill best" style="--height: 85%;"></span>
-        </div>
+        <div class="bar"><span class="bar-fill best"></span></div>
         <div class="temp"><span class="c">25°C</span><span class="f">77°F</span></div>
-        <div>Sep</div>
+        <div class="month-name">Sep</div>
       </div>
 
       <div class="month">
         <div class="emoji">🍂</div>
-        <div class="bar">
-          <span class="bar-fill best" style="--height: 80%;"></span>
-        </div>
+        <div class="bar"><span class="bar-fill best"></span></div>
         <div class="temp"><span class="c">18°C</span><span class="f">64°F</span></div>
-        <div>Oct</div>
+        <div class="month-name">Oct</div>
       </div>
 
       <div class="month">
         <div class="emoji">🌥️</div>
-        <div class="bar">
-          <span class="bar-fill mixed" style="--height: 50%;"></span>
-        </div>
+        <div class="bar"><span class="bar-fill mixed"></span></div>
         <div class="temp"><span class="c">12°C</span><span class="f">54°F</span></div>
-        <div>Nov</div>
+        <div class="month-name">Nov</div>
       </div>
 
       <div class="month">
         <div class="emoji">🎄</div>
-        <div class="bar">
-          <span class="bar-fill poor" style="--height: 35%;"></span>
-        </div>
+        <div class="bar"><span class="bar-fill poor"></span></div>
         <div class="temp"><span class="c">6°C</span><span class="f">43°F</span></div>
-        <div>Dec</div>
+        <div class="month-name">Dec</div>
       </div>
 
     </div>
   </div>
 
   <div class="disclaimer">
-    ⚠️ Historical averages only. Not a live forecast.
+    ⚠️ Data based on historical monthly averages (Tokyo, Japan). Not a live forecast.
   </div>
 
 </div>
