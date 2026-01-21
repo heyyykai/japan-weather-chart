@@ -15,25 +15,29 @@
       box-sizing: border-box;
     }
 
+    body {
+      margin: 0;
+    }
+
     .japan-weather-chart {
       font-family: 'Poppins', sans-serif;
-      max-width: 1100px;
-      margin: 3rem auto;
+      max-width: 720px; /* Notion-safe width */
+      margin: 2rem auto;
       text-align: center;
-      padding: 0 16px;
+      padding: 0 12px;
     }
 
     .japan-weather-chart h2 {
-      font-size: 38px;
+      font-size: 32px;
       margin-bottom: 1rem;
     }
 
     .legend {
       display: flex;
       justify-content: center;
-      gap: 16px;
-      margin-bottom: 2rem;
-      font-size: 14px;
+      gap: 14px;
+      margin-bottom: 1.5rem;
+      font-size: 13px;
       flex-wrap: wrap;
     }
 
@@ -44,8 +48,8 @@
     }
 
     .dot {
-      width: 12px;
-      height: 12px;
+      width: 11px;
+      height: 11px;
       border-radius: 50%;
       display: inline-block;
     }
@@ -56,10 +60,10 @@
     .poor  { background-color: #e27769; }
 
     .toggle-wrap {
-      margin: 2rem 0;
+      margin: 1.5rem 0;
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     input[type="radio"] {
@@ -68,10 +72,10 @@
 
     label {
       cursor: pointer;
-      padding: 6px 14px;
+      padding: 5px 14px;
       border-radius: 20px;
       border: 1px solid #ccc;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     input#c:checked ~ .toggle-wrap label[for="c"],
@@ -81,39 +85,35 @@
       border-color: #1e73be;
     }
 
+    /* 🚫 NO SCROLL ZONE */
     .months-wrapper {
-      overflow-x: auto;
+      overflow: hidden;
+      width: 100%;
     }
 
+    /* Always grid — never flex */
     .months {
       display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-      font-size: 16px;
-    }
-
-    @media (max-width: 1024px) {
-      .months {
-        display: flex;
-        width: max-content;
-      }
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 8px;
     }
 
     .month {
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 72px;
+      min-width: 0;
     }
 
     .emoji {
-      font-size: 18px;
+      font-size: 16px;
       margin-bottom: 4px;
     }
 
     .bar {
-      width: 26px;
-      height: 80px;
+      width: 100%;
+      max-width: 22px;
+      height: 72px;
       display: flex;
       align-items: flex-end;
       margin-bottom: 6px;
@@ -123,17 +123,18 @@
       width: 100%;
       height: 100%;
       display: block;
-      border-radius: 10px 10px 0 0;
+      border-radius: 8px 8px 0 0;
     }
 
     .temp {
-      font-size: 15px;
-      margin-bottom: 4px;
+      font-size: 13px;
+      margin-bottom: 3px;
+      white-space: nowrap;
     }
 
     .month-name {
       font-weight: 600;
-      margin-top: 2px;
+      font-size: 13px;
     }
 
     input#c:checked ~ .months-wrapper .f {
@@ -145,9 +146,24 @@
     }
 
     .disclaimer {
-      font-size: 13px;
+      font-size: 12px;
       color: #555;
-      margin-top: 1.5rem;
+      margin-top: 1.25rem;
+    }
+
+    /* Extra safety for tiny Notion embeds */
+    @media (max-width: 480px) {
+      .japan-weather-chart h2 {
+        font-size: 26px;
+      }
+
+      .emoji {
+        font-size: 15px;
+      }
+
+      .bar {
+        height: 64px;
+      }
     }
   </style>
 </head>
@@ -176,6 +192,8 @@
   <div class="months-wrapper">
     <div class="months">
 
+      <!-- Months (unchanged content) -->
+      <!-- Jan -->
       <div class="month">
         <div class="emoji">❄️</div>
         <div class="bar"><span class="bar-fill poor"></span></div>
@@ -183,6 +201,7 @@
         <div class="month-name">Jan</div>
       </div>
 
+      <!-- Feb -->
       <div class="month">
         <div class="emoji">🌦️</div>
         <div class="bar"><span class="bar-fill mixed"></span></div>
@@ -190,6 +209,7 @@
         <div class="month-name">Feb</div>
       </div>
 
+      <!-- Mar -->
       <div class="month">
         <div class="emoji">🌸</div>
         <div class="bar"><span class="bar-fill good"></span></div>
@@ -197,6 +217,7 @@
         <div class="month-name">Mar</div>
       </div>
 
+      <!-- Apr -->
       <div class="month">
         <div class="emoji">🌼</div>
         <div class="bar"><span class="bar-fill best"></span></div>
@@ -204,6 +225,7 @@
         <div class="month-name">Apr</div>
       </div>
 
+      <!-- May -->
       <div class="month">
         <div class="emoji">☀️</div>
         <div class="bar"><span class="bar-fill best"></span></div>
@@ -211,6 +233,7 @@
         <div class="month-name">May</div>
       </div>
 
+      <!-- Jun -->
       <div class="month">
         <div class="emoji">🌧️</div>
         <div class="bar"><span class="bar-fill mixed"></span></div>
@@ -218,6 +241,7 @@
         <div class="month-name">Jun</div>
       </div>
 
+      <!-- Jul -->
       <div class="month">
         <div class="emoji">🔥</div>
         <div class="bar"><span class="bar-fill good"></span></div>
@@ -225,6 +249,7 @@
         <div class="month-name">Jul</div>
       </div>
 
+      <!-- Aug -->
       <div class="month">
         <div class="emoji">🔥</div>
         <div class="bar"><span class="bar-fill mixed"></span></div>
@@ -232,6 +257,7 @@
         <div class="month-name">Aug</div>
       </div>
 
+      <!-- Sep -->
       <div class="month">
         <div class="emoji">🍁</div>
         <div class="bar"><span class="bar-fill best"></span></div>
@@ -239,6 +265,7 @@
         <div class="month-name">Sep</div>
       </div>
 
+      <!-- Oct -->
       <div class="month">
         <div class="emoji">🍂</div>
         <div class="bar"><span class="bar-fill best"></span></div>
@@ -246,6 +273,7 @@
         <div class="month-name">Oct</div>
       </div>
 
+      <!-- Nov -->
       <div class="month">
         <div class="emoji">🌥️</div>
         <div class="bar"><span class="bar-fill mixed"></span></div>
@@ -253,6 +281,7 @@
         <div class="month-name">Nov</div>
       </div>
 
+      <!-- Dec -->
       <div class="month">
         <div class="emoji">🎄</div>
         <div class="bar"><span class="bar-fill poor"></span></div>
