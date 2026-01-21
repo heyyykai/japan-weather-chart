@@ -26,6 +26,17 @@
       text-align: center;
       padding: 0 12px;
     }
+          /* Notion embed scaling */
+      transform-origin: top center;
+    }
+
+    /* Scale for narrower columns */
+    @media (max-width: 900px) {
+      .japan-weather-chart { transform: scale(0.9); }
+    }
+    @media (max-width: 700px) {
+      .japan-weather-chart { transform: scale(0.82); }
+    }
 
     .japan-weather-chart h2 {
       font-size: 32px;
