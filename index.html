@@ -1,200 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Country Weather Chart</title>
+  <meta charset="UTF-8" />
+  <title>Best Time to Visit Japan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-:root {
-  --best: #1e73be;
-  --shoulder: #EFC030;
-  --avoid: #E89EB6;
-  --bg: #f9fafb;
-  --text: #333;
-}
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-body {
-  margin: 0;
-  padding: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-/* Notion-safe container */
-.chart-wrapper {
-  max-width: 620px;
-  margin: auto;
-  padding: 16px;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-}
+    .japan-weather-chart {
+      font-family: 'Poppins', sans-serif;
+      max-width: 1100px;
+      margin: 3rem auto;
+      text-align: center;
+      padding: 0 16px;
+    }
 
-/* Header */
-.chart-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
+    .japan-weather-chart h2 {
+      font-size: 38px;
+      margin-bottom: 1rem;
+    }
 
-.chart-header h2 {
-  margin: 0;
-  font-size: 1.4rem;
-}
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 2rem;
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
 
-.chart-header p {
-  margin: 4px 0 0;
-  font-size: 0.9rem;
-  opacity: 0.7;
-}
+    .legend span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-/* Chart */
-.chart {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 10px;
-  align-items: end;
-  height: 220px;
-  margin-top: 20px;
-}
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
 
-/* Bar */
-.bar {
-  position: relative;
-  width: 100%;
-  border-radius: 8px 8px 0 0;
-  height: 0;
-  animation: grow 1s ease forwards;
-}
+    .best  { background-color: #5a7f53; }
+    .good  { background-color: #9fbf89; }
+    .mixed { background-color: #f0bb68; }
+    .poor  { background-color: #e27769; }
 
-/* Labels */
-.bar span {
-  position: absolute;
-  bottom: -48px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.75rem;
-  text-align: center;
-  width: 100%;
-  white-space: nowrap;
-}
+    .toggle-wrap {
+      margin: 2rem 0;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
 
-/* Temp label */
-.bar::after {
-  content: attr(data-temp);
-  position: absolute;
-  top: -22px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.75rem;
-  font-weight: 600;
-}
+    input[type="radio"] {
+      display: none;
+    }
 
-/* Colors */
-.best { background: var(--best); }
-.shoulder { background: var(--shoulder); }
-.avoid { background: var(--avoid); }
+    label {
+      cursor: pointer;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
 
-/* Legend */
-.legend {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  margin-top: 60px;
-  font-size: 0.8rem;
-}
+    input#c:checked ~ .toggle-wrap label[for="c"],
+    input#f:checked ~ .toggle-wrap label[for="f"] {
+      background-color: #1e73be;
+      color: white;
+      border-color: #1e73be;
+    }
 
-.legend div {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+    .months-wrapper {
+      overflow-x: auto;
+    }
 
-.legend span {
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
-  display: inline-block;
-}
+    .months {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      font-size: 16px;
+    }
 
-/* Animation */
-@keyframes grow {
-  from { height: 0; }
-  to { height: var(--bar-height); }
-}
-</style>
+    @media (max-width: 1024px) {
+      .months {
+        display: flex;
+        width: max-content;
+      }
+    }
+
+    .month {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 72px;
+    }
+
+    .emoji {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .bar {
+      width: 26px;
+      height: 80px;
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 6px;
+    }
+
+    .bar-fill {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .temp {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .month-name {
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    input#c:checked ~ .months-wrapper .f {
+      display: none;
+    }
+
+    input#f:checked ~ .months-wrapper .c {
+      display: none;
+    }
+
+    .disclaimer {
+      font-size: 13px;
+      color: #555;
+      margin-top: 1.5rem;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="chart-wrapper">
-  <div class="chart-header">
-    <h2>Japan Weather by Month</h2>
-    <p>Based on average daytime temperatures</p>
-  </div>
+<div class="japan-weather-chart">
 
-  <div class="chart" id="chart"></div>
+  <h2>🌤️ Best Time to Visit Japan</h2>
 
   <div class="legend">
-    <div><span style="background:var(--best)"></span>Best</div>
-    <div><span style="background:var(--shoulder)"></span>Shoulder</div>
-    <div><span style="background:var(--avoid)"></span>Avoid</div>
+    <span><span class="dot best"></span>Best</span>
+    <span><span class="dot good"></span>Good</span>
+    <span><span class="dot mixed"></span>Mixed</span>
+    <span><span class="dot poor"></span>Poor</span>
   </div>
+
+  <input type="radio" name="unit" id="c" checked>
+  <input type="radio" name="unit" id="f">
+
+  <div class="toggle-wrap">
+    <label for="c">°C</label>
+    <label for="f">°F</label>
+  </div>
+
+  <div class="months-wrapper">
+    <div class="months">
+
+      <div class="month">
+        <div class="emoji">❄️</div>
+        <div class="bar"><span class="bar-fill poor"></span></div>
+        <div class="temp"><span class="c">4°C</span><span class="f">39°F</span></div>
+        <div class="month-name">Jan</div>
+      </div>
+
+      <div class="month">
+        <div class="emoji">🌦️</div>
+        <div class="bar"><span class="bar-fill mixed"></span></div>
+        <div class="temp"><span class="c">6°C</span><span class="f">43°F</span></div>
+        <div class="month-name">Feb</div>
+      </div>
+
+      <div class="month">
+        <div class="emoji">🌸</div>
+        <div class="bar"><span class="bar-fill good"></span></div>
+        <div class="temp"><span class="c">10°C</span><span class="f">50°F</span></div>
+        <div class="month-name">Mar</div>
+      </div>
+
+      <div class="month">
+        <div class="emoji">🌼</div>
+        <div class="bar"><span class="bar-fill best"></span></div>
+        <div class="temp"><span class="c">16°C</span><span class="f">61°F</span></div>
+        <div class="month-name">Apr</div>
+      </div>
+
+      <div class="month">
+        <div class="emoji">☀️</div>
+        <div class="bar"><span class="bar-fill best"></span></div>
+        <div class="temp"><span class="c">21°C</span><span class="f">70°F</span></div>
+        <div class="month-name">May</div>
+      </div>
+
+      <div class="month">
+        <div class="emoji">🌧️</div>
+        <div class="bar"><span class="bar-fill mixed"></span></div>
+        <div class="temp"><span class="c">24°C</span><span class="f">75°F</span></div>
+        <div class="month-name">Jun</div>
+      </div>
+
+      <div class="month">
+        <div class="emoji">🔥</div>
+        <div class="bar"><span class="bar-fill good"></span></div>
+        <div class="temp"><span class="c">29°C</span><span class="f">84°F</span></div>
+        <div class="month-name">Jul</div>
+      </div>
+
+      <div class="month">
+        <div class="emoji">🔥</div>
+        <div class="bar"><span class="bar-fill mixed"></span></div>
+        <div class="temp"><span class="c">31°C</span><span class="f">88°F</span></div>
+        <div class="month-name">Aug</div>
+      </div>
+
+      <div class="month">
+        <div class="emoji">🍁</div>
+        <div class="bar"><span class="bar-fill best"></span></div>
+        <div class="temp"><span class="c">25°C</span><span class="f">77°F</span></div>
+        <div class="month-name">Sep</div>
+      </div>
+
+      <div class="month">
+        <div class="emoji">🍂</div>
+        <div class="bar"><span class="bar-fill best"></span></div>
+        <div class="temp"><span class="c">18°C</span><span class="f">64°F</span></div>
+        <div class="month-name">Oct</div>
+      </div>
+
+      <div class="month">
+        <div class="emoji">🌥️</div>
+        <div class="bar"><span class="bar-fill mixed"></span></div>
+        <div class="temp"><span class="c">12°C</span><span class="f">54°F</span></div>
+        <div class="month-name">Nov</div>
+      </div>
+
+      <div class="month">
+        <div class="emoji">🎄</div>
+        <div class="bar"><span class="bar-fill poor"></span></div>
+        <div class="temp"><span class="c">6°C</span><span class="f">43°F</span></div>
+        <div class="month-name">Dec</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    ⚠️ Data based on historical monthly averages (Tokyo, Japan). Not a live forecast.
+  </div>
+
 </div>
-
-<script>
-/* ===============================
-   EDIT ONLY THIS DATA SECTION
-   =============================== */
-
-const country = "Japan";
-
-const monthlyData = [
-  { month: "Jan", temp: 5 },
-  { month: "Feb", temp: 6 },
-  { month: "Mar", temp: 10 },
-  { month: "Apr", temp: 15 },
-  { month: "May", temp: 20 },
-  { month: "Jun", temp: 23 },
-  { month: "Jul", temp: 28 },
-  { month: "Aug", temp: 30 },
-  { month: "Sep", temp: 26 },
-  { month: "Oct", temp: 20 },
-  { month: "Nov", temp: 14 },
-  { month: "Dec", temp: 8 }
-];
-
-/* ===============================
-   DO NOT TOUCH BELOW
-   =============================== */
-
-const chart = document.getElementById("chart");
-
-/* Temperature → height + label logic */
-function classifyMonth(temp) {
-  if (temp >= 15 && temp <= 25) return "best";
-  if ((temp >= 10 && temp < 15) || (temp > 25 && temp <= 28)) return "shoulder";
-  return "avoid";
-}
-
-monthlyData.forEach(item => {
-  const bar = document.createElement("div");
-
-  const label = classifyMonth(item.temp);
-  const height = Math.min(100, item.temp * 3); // auto scale
-
-  bar.className = `bar ${label}`;
-  bar.style.setProperty("--bar-height", height + "%");
-  bar.setAttribute("data-temp", item.temp + "°C");
-
-  const span = document.createElement("span");
-  span.innerHTML = `${item.month}<br>${label.charAt(0).toUpperCase() + label.slice(1)}`;
-
-  bar.appendChild(span);
-  chart.appendChild(bar);
-});
-</script>
 
 </body>
 </html>
